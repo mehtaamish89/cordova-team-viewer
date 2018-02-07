@@ -5,6 +5,7 @@ import org.apache.cordova.CordovaPlugin;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.teamviewer.sdk.screensharing.api.TVConfigurationID;
 import com.teamviewer.sdk.screensharing.api.TVCreationError;
@@ -24,6 +25,7 @@ public class TeamViewerSDK extends CordovaPlugin {
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext)
             throws JSONException {
         if (action.equals("openSessionWithConfigurationId")) {
+            Log.d("TV", "opening Session with conf id");
             openSessionWithConfigurationId(args.getString(0), args.getString(1), args.getString(2), args.getString(3), callbackContext);
             return true;
         } else if (action.equals("openSessionWithSessionCode")) {
@@ -45,6 +47,7 @@ public class TeamViewerSDK extends CordovaPlugin {
                                                              final String description,
                                                              final CallbackContext callbackContext)
     {
+        Log.d("TV", "opening Session with conf id--2");
         final TVSessionConfiguration config =
                 new TVSessionConfiguration.Builder(
                         new TVConfigurationID(configurationId))
@@ -53,7 +56,7 @@ public class TeamViewerSDK extends CordovaPlugin {
                         .build();
 
         final Activity activity = this.cordova.getActivity();
-
+        Log.d("TV", "Config got created");
         startSession(config, token, activity, callbackContext);
     }
 
@@ -86,6 +89,7 @@ public class TeamViewerSDK extends CordovaPlugin {
                 TVSessionFactory.createTVSession(activity, token, new TVSessionCreationCallback() {
                     @Override
                     public void onTVSessionCreationSuccess(TVSession session) {
+                        Log.d("TV", "Session created successfully");
                         currentSession = session;
                         currentSession.start(configuration);
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, 0));
@@ -93,6 +97,7 @@ public class TeamViewerSDK extends CordovaPlugin {
 
                     @Override
                     public void onTVSessionCreationFailed(TVCreationError error) {
+                        Log.d("TV", "session creation failed");
                         callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, error.toString()));
                     }
 
