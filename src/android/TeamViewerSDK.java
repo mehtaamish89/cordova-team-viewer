@@ -82,10 +82,10 @@ public class TeamViewerSDK extends CordovaPlugin {
 
     private void startSession(final TVSessionConfiguration configuration, final String token, final Activity activity, final CallbackContext callbackContext)
     {
-        Handler mainHandler = new Handler(Looper.getMainLooper());
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
+        // Handler mainHandler = new Handler(Looper.getMainLooper());
+        // Runnable runnable = new Runnable() {
+        //     @Override
+        //     public void run() {
                 TVSessionFactory.createTVSession(activity, token, new TVSessionCreationCallback() {
                     @Override
                     public void onTVSessionCreationSuccess(TVSession session) {
@@ -102,9 +102,9 @@ public class TeamViewerSDK extends CordovaPlugin {
                     }
 
                 });
-            }
-        };
+    //         }
+    //     };
 
-        mainHandler.post(runnable);
+    //     mainHandler.post(runnable);
     }
 }
